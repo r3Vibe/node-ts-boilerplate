@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "sourceMap": true,
+    "outDir": "./dev_dist",
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", ".vscode", ".husky"]
+}

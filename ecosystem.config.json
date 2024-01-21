@@ -1,0 +1,12 @@
+{
+  "apps": [
+    {
+      "name": "boilerplate",
+      "script": "dist/index.js",
+      "instances": 2,
+      "autorestart": true,
+      "watch": false,
+      "time": true
+    }
+  ]
+}
