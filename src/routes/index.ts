@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import User from '../models/user.model';
 
 const router = Router();
 
@@ -38,7 +39,12 @@ router.post('/test-route', (req, res, next) => {
  *       200:
  *         description: drink coming...
  */
-router.get('/get-me-a-drink', (req, res, next) => {
+router.get('/get-me-a-drink', async (req, res, next) => {
+  await User.create({
+    email: 'mama@mail.com',
+    first_name: 'mama',
+    last_name: 'momo',
+  });
   res.send({ message: 'ok' });
 });
 
