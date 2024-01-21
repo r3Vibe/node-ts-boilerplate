@@ -27,4 +27,19 @@ router.post('/test-route', (req, res, next) => {
   res.send({ message: 'working well' });
 });
 
+/**
+ * @swagger
+ * /get-me-a-drink:
+ *   get:
+ *     summary: dummy endpoint
+ *     description: get a drink
+ *     tags: [Test]
+ *     responses:
+ *       200:
+ *         description: drink coming...
+ */
+router.get('/get-me-a-drink', (req, res, next) => {
+  res.send('have a pinacolada');
+});
+
 export default router;
