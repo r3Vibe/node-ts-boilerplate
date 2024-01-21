@@ -20,5 +20,6 @@ module.exports = {
       { argsIgnorePattern: 'next' },
     ],
     'prettier/prettier': 'error',
+    '@typescript-eslint/no-explicit-any': 'error',
   },
 };
