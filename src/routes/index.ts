@@ -27,10 +27,6 @@ router.post('/test-route', (req, res, next) => {
   res.send({ message: 'working well' });
 });
 
-const text = (a: string): string => {
-  return a;
-};
-
 /**
  * @swagger
  * /get-me-a-drink:
@@ -43,8 +39,7 @@ const text = (a: string): string => {
  *         description: drink coming...
  */
 router.get('/get-me-a-drink', (req, res, next) => {
-  const data = text('hola');
-  res.send({ data });
+  res.send({ message: 'ok' });
 });
 
 export default router;
