@@ -7,13 +7,14 @@
   "scripts": {
     "build": "tsc && node build.js",
     "dev": "nodemon",
+    "typecheck": "tsc --noEmit",
     "start": "node dist/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"**/*.ts\"",
     "format:check": "prettier --check \"**/*.ts\"",
     "prepare": "husky install",
-    "commit": "npm run lint:fix && npm run format"
+    "commit": "npm run typecheck && npm run lint:fix && npm run format"
   },
   "husky": {
     "hooks": {
