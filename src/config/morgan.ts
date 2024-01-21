@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import morgan from 'morgan';
 import config from './config';
 import logger from './logger';
 
-// @ts-ignore
+// @ts-expect-error
 morgan.token('message', (req, res) => res.locals.errorMessage || '');
 
 const getIpFormat = () => (config.env === 'prod' ? ':remote-addr - ' : '');

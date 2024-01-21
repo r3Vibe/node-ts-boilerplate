@@ -1,4 +1,4 @@
-import { Server } from 'http';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import app from './app';
 import config from './config/config';
 import logger from './config/logger';

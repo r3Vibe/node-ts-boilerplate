@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import config from '../config/config';
 import ApiError from './apiErrorConverter';
 import { Response, Request, NextFunction } from 'express';
