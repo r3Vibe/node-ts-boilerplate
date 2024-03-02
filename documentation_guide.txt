@@ -1,0 +1,97 @@
+/**
+ * @openapi
+ * /app/auth/verify-otp:
+ *   post:
+ *     tags:
+ *       - Authentication
+ *     description: Endpoint for verifying otp.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               phone:
+ *                 type: string
+ *                 description: Phone number of the user (must be a 10-digit number).
+ *               otp:
+ *                 type: string
+ *                 description: Phone number of the user (must be a 6-digit number).
+ *             required:
+ *               - phone
+ *               - otp
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 is_verified:
+ *                   type: boolean
+ *                   description: Indicates if the otp was verified.
+ *                   example: true
+ *                 user:
+ *                   type: object
+ *                   description: User data from database.
+ *                   example:
+ *                     id: 12345
+ *                     username: johndoe
+ *                     email: johndoe@example.com
+ *                     full_name: John Doe
+ *                     age: 30
+ *       '400':
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   description: HTTP status code.
+ *                   example: 400
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Bad Request
+ *                 stackTrace:
+ *                   type: string
+ *                   description: Stack trace of the error.
+ *                   example: Error occurred at line 123 in file xyz.js
+ *       '401':
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   description: HTTP status code.
+ *                   example: 401
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Unauthorized
+ *                 stackTrace:
+ *                   type: string
+ *                   description: Stack trace of the error.
+ *                   example: Error occurred at line 123 in file xyz.js
+ */
+
+
+post request openapi documentations for swagger
+
+
+
+/**
+ * @async
+ * @author Arnab Gupta
+ * @param {number} phone - User's Phone Number
+ * @returns {Promise<boolean>} True/False
+ */
+
+function documentation
