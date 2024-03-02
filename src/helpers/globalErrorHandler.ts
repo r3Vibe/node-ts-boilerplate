@@ -3,20 +3,12 @@ import config from '../config/config';
 import ApiError from './apiErrorConverter';
 import { Response, Request, NextFunction } from 'express';
 
-const handleDevErrors = (res: Response, error: any) => {
-  return res.status(error.statusCode).send({
-    status: error.status,
-    message: error.message ? error.message : 'Generic Error',
-    stackTrace: error.stack,
-    error: error,
-  });
-};
-
 const handleProdErrors = (res: Response, error: any) => {
   if (error.isOperational) {
     return res.status(error.statusCode).send({
       status: error.status,
       message: error.message,
+      stackTrace: config.env === 'dev' ? error.stack : null,
     });
   } else {
     return res.status(500).send({ status: 'error', message: error.message });
@@ -63,24 +55,21 @@ const globalErrorHandler = (
   error.statusCode = error.statusCode || 500;
   error.status = error.status || 'error';
 
-  if (config.env === 'dev') {
-    res.locals.errorMessage = error.message;
-    handleDevErrors(res, error);
-  }
+  if (error.name === 'CastError') error = CaseErrorHandler(error);
+  if (error.code === 11000) error = DuplicateKeyError(error);
+  if (error.name === 'ValidationError') error = ValidationErrorHandler(error);
+  if (
+    error.type &&
+    (error.type === 'body' || error.type === 'params' || error.type === 'query')
+  )
+    error = HandleJoiError(error);
+  if (error.name === 'JsonWebTokenError')
+    error = JsonWebTokenErrorHandler(error);
+  if (error.name === 'TokenExpiredError')
+    error = JsonWebTokenErrorHandler(error);
 
-  if (config.env === 'prod') {
-    if (error.name === 'CastError') error = CaseErrorHandler(error);
-    if (error.code === 11000) error = DuplicateKeyError(error);
-    if (error.name === 'ValidationError') error = ValidationErrorHandler(error);
-    if (error.type && error.type === 'body') error = HandleJoiError(error);
-    if (error.name === 'JsonWebTokenError')
-      error = JsonWebTokenErrorHandler(error);
-    if (error.name === 'TokenExpiredError')
-      error = JsonWebTokenErrorHandler(error);
-
-    res.locals.errorMessage = error.message;
-    handleProdErrors(res, error);
-  }
+  res.locals.errorMessage = error.message;
+  handleProdErrors(res, error);
 };
 
 export default globalErrorHandler;

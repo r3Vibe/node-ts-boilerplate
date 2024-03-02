@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import compression from 'compression';
 import mongoSanitize from 'express-mongo-sanitize';
 import cors from 'cors';
-import router from './routes';
+import router from './routes/v1';
 import { errorHandler, successHandler } from './config/morgan';
 import config from './config/config';
 import { authLimiter, otpLimiter } from './helpers/authLimiter';
@@ -27,6 +27,9 @@ const app = express();
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
+
+// Serve static files from the 'public' directory
+app.use(express.static('src/public'));
 
 // Set the views directory
 app.set('views', __dirname + '/views');
@@ -76,7 +79,7 @@ if (config.env === 'prod') {
   app.use('/v1/auth/resend-otp', otpLimiter);
 }
 
-// all routes
+// all v1 routes
 app.use('/v1', router);
 
 // setup swagger docs endpoint

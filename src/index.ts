@@ -11,7 +11,9 @@ let server: any;
 mongoose.connect(config.mongoose.url).then(() => {
   logger.info('Connected to MongoDB');
   server = app.listen(config.port, () => {
-    logger.info(`Listening to port ${config.port}, Mode: ${config.env}`);
+    logger.info(`Mode: ${config.env}`);
+    logger.info(`Server Address http://127.0.0.1:${config.port}`);
+    logger.info(`Swagger Address http://127.0.0.1:${config.port}/docs`);
   });
 });
 
