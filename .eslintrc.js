@@ -20,6 +20,7 @@ module.exports = {
       { argsIgnorePattern: 'next' },
     ],
     'prettier/prettier': 'error',
-    '@typescript-eslint/no-explicit-any': 'error',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
   },
 };

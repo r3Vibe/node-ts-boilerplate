@@ -4,10 +4,9 @@ import helmet from 'helmet';
 import compression from 'compression';
 import mongoSanitize from 'express-mongo-sanitize';
 import cors from 'cors';
-import router from './routes/v1';
 import { errorHandler, successHandler } from './config/morgan';
 import config from './config/config';
-import { authLimiter, otpLimiter } from './helpers/authLimiter';
+import { authLimiter } from './helpers/authLimiter';
 import globalErrorHandler from './helpers/globalErrorHandler';
 import ApiError from './helpers/apiErrorConverter';
 import cookieParser from 'cookie-parser';
@@ -17,13 +16,6 @@ import sanitizeHtmlMiddleware from './middlewares/htmlSanitizer';
 
 // initialize express app
 const app = express();
-
-// webhook setup for stripe
-// app.post(
-//   '/stripe/webhook',
-//   express.raw({ type: 'application/json' }),
-//   webhookRouter,
-// );
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
@@ -57,7 +49,14 @@ app.use(mongoSanitize());
 // enable cors
 app.use(
   cors({
-    origin: ['http://127.0.0.1:5173', 'http://127.0.0.1:3000'],
+    origin: [
+      'http://127.0.0.1:5173',
+      'http://127.0.0.1:3000',
+      'http://127.0.0.1:4200',
+      'http://localhost:5173',
+      'http://localhost:3000',
+      'http://localhost:4200',
+    ],
     credentials: true, // if using cookie add this line
   }),
 );
@@ -75,15 +74,15 @@ app.disable('etag');
 if (config.env === 'prod') {
   app.set('trust proxy', 2); // to prevent X-Forwarded-For header validation error
   app.use('/v1/auth/', authLimiter);
-  app.use('/v1/auth/forgot-password', otpLimiter);
-  app.use('/v1/auth/resend-otp', otpLimiter);
 }
 
 // all v1 routes
-app.use('/v1', router);
+// app.use('/v1', router);
 
 // setup swagger docs endpoint
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+if (config.env !== 'prod') {
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+}
 
 // welcome screen for the api if anyone visits
 app.get('/', (req, res, next) => {

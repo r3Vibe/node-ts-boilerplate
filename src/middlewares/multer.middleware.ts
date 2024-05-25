@@ -6,6 +6,10 @@ import { Request } from 'express';
 
 const s3 = new S3Client();
 
+/**
+ * @description this middleware is used to upload files to s3 bucket
+ * @example upload.single('key') upload.array('key')
+ */
 const upload = multer({
   storage: multerS3({
     s3: s3,

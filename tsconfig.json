@@ -29,5 +29,5 @@
     "skipLibCheck": true,
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", ".vscode", ".husky"],
+  "exclude": ["node_modules", ".vscode", ".husky", "src/models/plugin/private.ts"],
 }

@@ -6,6 +6,10 @@ import logger from './logger';
 // @ts-expect-error
 morgan.token('message', (req, res) => res.locals.errorMessage || '');
 
+/**
+ * @author Arnab Gupta
+ * @description morgan is being used to log the incoming http request
+ */
 const getIpFormat = () => (config.env === 'prod' ? ':remote-addr - ' : '');
 const successResponseFormat = `${getIpFormat()}:method :url :status - :response-time ms`;
 const errorResponseFormat = `${getIpFormat()}:method :url :status - :response-time ms - message: :message`;

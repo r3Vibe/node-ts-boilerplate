@@ -5,10 +5,9 @@ const options = {
   definition: {
     openapi: '3.0.1',
     info: {
-      title: 'Stylaa API',
-      version: '0.0.1',
-      description:
-        'Stylaa is online salon project where service providers can signup and list there services. Usual Customer can also login using their phone number and use the platform to find different services',
+      title: 'MojiAi API',
+      version: '0.0.5',
+      description: 'Nodejs boilerplate',
     },
     servers: [
       {
