@@ -13,6 +13,7 @@ import cookieParser from 'cookie-parser';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocs from './swagger';
 import sanitizeHtmlMiddleware from './middlewares/htmlSanitizer';
+import router from './routes';
 
 // initialize express app
 const app = express();
@@ -77,7 +78,7 @@ if (config.env === 'prod') {
 }
 
 // all v1 routes
-// app.use('/v1', router);
+app.use('/v1', router);
 
 // setup swagger docs endpoint
 if (config.env !== 'prod') {

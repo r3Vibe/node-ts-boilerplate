@@ -7,7 +7,7 @@ import config from '../config/config';
  * @description generate a base32 hash for the user
  * @returns {string} 456896
  */
-const generateOTPHash = (key: string) => {
+const generateOTPHash = (key: string): string => {
   return OTPAuth.Secret.fromUTF8(key).base32;
 };
 
@@ -17,7 +17,7 @@ const generateOTPHash = (key: string) => {
  * @description generate a time based otp for the user
  * @returns {string} 456896
  */
-const generateOTP = (secret: string) => {
+const generateOTP = (secret: string): string => {
   const totp = new OTPAuth.TOTP({
     issuer: config.security.issuer,
     label: config.security.issuer,
@@ -35,9 +35,9 @@ const generateOTP = (secret: string) => {
  * @description Verify the already generated totp for the current time
  * @param secret
  * @param token
- * @returns {number} Token Delta or null
+ * @returns {number | null} Token Delta or null
  */
-const verifyOTP = (secret: string, token: string) => {
+const verifyOTP = (secret: string, token: string): number | null => {
   const totp = new OTPAuth.TOTP({
     issuer: config.security.issuer,
     label: config.security.issuer,
