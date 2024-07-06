@@ -11,8 +11,10 @@ import globalErrorHandler from './helpers/globalErrorHandler';
 import ApiError from './helpers/apiErrorConverter';
 import cookieParser from 'cookie-parser';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocs from './swagger';
 import sanitizeHtmlMiddleware from './middlewares/htmlSanitizer';
+import routes from './routes';
+import fs from 'fs';
+import path from 'path';
 
 // initialize express app
 const app = express();
@@ -77,9 +79,18 @@ if (config.env === 'prod') {
 }
 
 // all v1 routes
-// app.use('/v1', router);
+app.use('/v1', routes);
 
 // setup swagger docs endpoint
+const swaggerOutputPath = path.join(__dirname, 'swagger-output.json');
+
+if (!fs.existsSync(swaggerOutputPath)) {
+  // Conditionally require and execute the swagger generation script
+  require('./swagger'); // This will generate the swagger-output.json file
+}
+
+import swaggerDocs from './swagger-output.json';
+
 if (config.env !== 'prod') {
   app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 }

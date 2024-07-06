@@ -59,6 +59,7 @@ export default {
   },
   s3: {
     bucket: envVars.S3_BUCKET_PATH,
+    url: envVars.CLOUDFRONT_URL,
   },
   sendgrid: {
     api_key: envVars.SENDGRID_API_KEY,

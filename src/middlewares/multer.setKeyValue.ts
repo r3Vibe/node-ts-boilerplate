@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import config from '../config/config';
 
 /**
  * @author Arnab Gupta
@@ -11,7 +12,9 @@ const setKeyValueAfterMulter = (key: string) => {
     // handle single file upload
     if (req.file) {
       const myFile = req.file as Express.MulterS3.File;
-      bodyData[key] = myFile.location;
+      const file_name = myFile.location.split('/').pop();
+      const cloudfront_url = `https://${config.s3.url}/${file_name}`;
+      bodyData[key] = cloudfront_url;
     }
 
     // handle multiple file uploads
@@ -20,7 +23,9 @@ const setKeyValueAfterMulter = (key: string) => {
       const allFiles: string[] = [];
       for (let i: number = 0; i < reqFiles.length; i++) {
         const file: Express.MulterS3.File = reqFiles[i];
-        allFiles.push(file.location);
+        const file_name = file.location.split('/').pop();
+        const cloudfront_url = `https://${config.s3.url}/${file_name}`;
+        allFiles.push(cloudfront_url);
       }
       bodyData[key] = allFiles;
     }

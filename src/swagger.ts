@@ -1,9 +1,13 @@
 import swaggerJsDoc from 'swagger-jsdoc';
 import config from './config/config';
+import swaggerAutogen from 'swagger-autogen';
+
+const outputFile = './swagger-output.json';
+const routes = ['./src/routes/index.ts'];
 
 const options = {
   definition: {
-    openapi: '3.0.1',
+    openapi: '3.1.0',
     info: {
       title: 'MojiAi API',
       version: '0.0.5',
@@ -25,9 +29,9 @@ const options = {
       },
     },
   },
-  apis: ['./src/routes/**/*.ts'],
+  apis: routes,
 };
 
 const swaggerDocs = swaggerJsDoc(options);
 
-export default swaggerDocs;
+swaggerAutogen()(outputFile, routes, swaggerDocs);

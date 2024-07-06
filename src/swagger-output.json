@@ -1,0 +1,35 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "MojiAi API",
+    "version": "0.0.5",
+    "description": "Nodejs boilerplate"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/v1",
+      "description": "V1 Local Server"
+    }
+  ],
+  "paths": {
+    "/auth/test-endpoit": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
