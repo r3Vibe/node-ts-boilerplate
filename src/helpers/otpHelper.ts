@@ -1,5 +1,5 @@
 import * as OTPAuth from 'otpauth';
-import config from '../config/config';
+import { config } from '../config';
 
 /**
  * @author Arnab Gupta

@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import Joi from 'joi';
-import ApiError from '../helpers/apiErrorConverter';
+import { ApiError } from '../helpers';
 
 /** Load the .env file */
 dotenv.config({ path: path.join(__dirname, '../../.env') });

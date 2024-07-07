@@ -6,4 +6,4 @@ class ApiResponse {
     this.message = message;
   }
 }
-export { ApiResponse };
+export default ApiResponse;

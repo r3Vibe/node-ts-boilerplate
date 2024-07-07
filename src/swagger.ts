@@ -5,6 +5,10 @@ import swaggerAutogen from 'swagger-autogen';
 const outputFile = './swagger-output.json';
 const routes = ['./src/routes/index.ts'];
 
+const autoGenOptions = {
+  openapi: '3.1.0',
+};
+
 const options = {
   definition: {
     openapi: '3.1.0',
@@ -34,4 +38,4 @@ const options = {
 
 const swaggerDocs = swaggerJsDoc(options);
 
-swaggerAutogen()(outputFile, routes, swaggerDocs);
+swaggerAutogen(autoGenOptions)(outputFile, routes, swaggerDocs);

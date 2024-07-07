@@ -1,17 +1,5 @@
 import winston from 'winston';
-import config from './config';
-import { MongoDB } from 'winston-mongodb';
-
-/**
- * @author Arnab Gupta
- * @description mongoTransport is used to save error logs in the database
- */
-const mongoTransport = new MongoDB({
-  level: 'error',
-  db: config.mongoose.url,
-  collection: 'logs',
-  options: { useUnifiedTopology: true },
-});
+import { config } from '.';
 
 /**
  * @author Arnab Gupta
@@ -42,7 +30,6 @@ const logger = winston.createLogger({
     new winston.transports.Console({
       stderrLevels: ['error'],
     }),
-    mongoTransport,
   ],
 });
 

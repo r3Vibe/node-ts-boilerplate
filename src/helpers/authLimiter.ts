@@ -24,4 +24,4 @@ const otpLimiter: RequestHandler = rateLimit({
   skipSuccessfulRequests: true,
 });
 
-export { authLimiter, otpLimiter };
+export default { authLimiter, otpLimiter };

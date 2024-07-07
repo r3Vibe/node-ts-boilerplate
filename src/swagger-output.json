@@ -19,6 +19,70 @@
           "200": {
             "description": "OK"
           }
+        },
+        "deprecated": true
+      }
+    },
+    "/auth/get-user-by-id/{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Some summary...",
+        "description": "Some description...",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/check-body": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Some summary...",
+        "description": "Some description...",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "example": "any"
+                  },
+                  "name": {
+                    "example": "any"
+                  },
+                  "email": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

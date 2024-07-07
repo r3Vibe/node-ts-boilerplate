@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 // import all required packages
 import express from 'express';
 import helmet from 'helmet';
 import compression from 'compression';
 import mongoSanitize from 'express-mongo-sanitize';
 import cors from 'cors';
-import { errorHandler, successHandler } from './config/morgan';
+import morganHandlers from './config/morgan';
 import config from './config/config';
-import { authLimiter } from './helpers/authLimiter';
+import { rateLimiter } from './helpers';
 import globalErrorHandler from './helpers/globalErrorHandler';
 import ApiError from './helpers/apiErrorConverter';
 import cookieParser from 'cookie-parser';
@@ -29,8 +30,8 @@ app.use(express.static('src/public'));
 app.set('views', __dirname + '/views');
 
 // log requests to console
-app.use(successHandler);
-app.use(errorHandler);
+app.use(morganHandlers.successHandler);
+app.use(morganHandlers.errorHandler);
 
 // parse json data and form data to body
 app.use(express.json({ limit: '20mb' }));
@@ -75,7 +76,7 @@ app.disable('etag');
 // auth limiter in production mode
 if (config.env === 'prod') {
   app.set('trust proxy', 2); // to prevent X-Forwarded-For header validation error
-  app.use('/v1/auth/', authLimiter);
+  app.use('/v1/auth/', rateLimiter.authLimiter);
 }
 
 // all v1 routes
@@ -85,14 +86,12 @@ app.use('/v1', routes);
 const swaggerOutputPath = path.join(__dirname, 'swagger-output.json');
 
 if (!fs.existsSync(swaggerOutputPath)) {
-  // Conditionally require and execute the swagger generation script
-  require('./swagger'); // This will generate the swagger-output.json file
-}
-
-import swaggerDocs from './swagger-output.json';
-
-if (config.env !== 'prod') {
-  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+  require('./swagger');
+} else {
+  const swaggerDocs = require('./swagger-output.json');
+  if (config.env !== 'prod') {
+    app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+  }
 }
 
 // welcome screen for the api if anyone visits
