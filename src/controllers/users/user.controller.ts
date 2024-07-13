@@ -14,8 +14,7 @@ const check = catchAsync(async (req, res, next) => {
   /* #swagger.security = [{
             "bearerAuth": []
     }] */
-  const { id, name, email } = req.body;
-  res.status(httpStatus.OK).send(new ApiResponse({}, `testing`));
+  res.status(httpStatus.OK).send(new ApiResponse({}, res.__(`greeting`)));
 });
 
 export default { getemailEvent, check };

@@ -16,9 +16,13 @@ import sanitizeHtmlMiddleware from './middlewares/htmlSanitizer';
 import routes from './routes';
 import fs from 'fs';
 import path from 'path';
+import internalization from './internalization';
 
 // initialize express app
 const app = express();
+
+// Initialize i18n
+app.use(internalization.init);
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
@@ -67,12 +71,20 @@ app.use(
 // disable etag
 app.disable('etag');
 
+// Middleware to set language from query parameter or cookie
+app.use((req, res, next) => {
+  const lang = req.query.lang || req.cookies.lang || req.params.lang;
+  if (lang) {
+    res.setLocale(lang);
+  }
+  next();
+});
+
 // test proxy setup for express-rate-limit to work properly
 //app.get("/ip", (request, response) => response.send(request.ip));
 //app.get("/header", (request, response) =>
 //  response.send(request.headers["x-forwarded-for"])
 //);
-
 // auth limiter in production mode
 if (config.env === 'prod') {
   app.set('trust proxy', 2); // to prevent X-Forwarded-For header validation error
