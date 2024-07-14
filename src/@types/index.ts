@@ -45,3 +45,11 @@ export interface tokenSchemaInterface {
   createdAt: string;
   modifiedAt: string;
 }
+
+export interface otpSchemaInterface {
+  _id: ObjectId;
+  otp: string;
+  user: IUser | string | null;
+  createdAt: string;
+  modifiedAt: string;
+}
